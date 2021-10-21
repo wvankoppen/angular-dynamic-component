@@ -1,22 +1,19 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-  template: `<div>
-   my template! My input data: {{data|json}}
-   <span *ngFor="let i of arr">{{i}}</span>
-   </div>
+  template: `<div> {{message}} </div>
   `,
 })
-export class HeroJobAdComponent implements OnInit, OnDestroy {
+export class LoaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
-    console.log('init!');
+    console.log('loader.ngOnInit()');
   }
 
   ngOnDestroy(): void {
-    console.log('destroy!');
+    console.log('loader.ngOnDestroy()');
   }
-  @Input() data: any;
-  arr = [0, 1, 2];
+
+  @Input() message?: string;
 }
 
 /*

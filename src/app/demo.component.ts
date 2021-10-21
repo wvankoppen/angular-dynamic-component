@@ -1,13 +1,11 @@
 import {
   Component,
-  ViewChild,
   ComponentFactoryResolver,
   ApplicationRef,
   Injector,
 } from '@angular/core';
 
-import { AdDirective } from './ad.directive';
-import { HeroJobAdComponent } from './hero-job-ad.component';
+import { LoaderComponent } from './loader.component';
 
 @Component({
   selector: 'app-ad-banner',
@@ -23,9 +21,7 @@ import { HeroJobAdComponent } from './hero-job-ad.component';
     </div>
   `,
 })
-export class AdBannerComponent {
-  @ViewChild(AdDirective, { static: true }) adHost!: AdDirective;
-
+export class DemoComponent {
   private componentRefs: any = {};
 
   constructor(
@@ -36,7 +32,7 @@ export class AdBannerComponent {
 
   createComponent(host: string) {
     const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(HeroJobAdComponent);
+      this.componentFactoryResolver.resolveComponentFactory(LoaderComponent);
 
     const hostElem = document
       .getElementById(host)
@@ -48,7 +44,7 @@ export class AdBannerComponent {
       hostElem
     );
 
-    this.componentRefs[host].instance.data = { myinput: Math.random() };
+    this.componentRefs[host].instance.message = 'loading...';
 
     this.app.attachView(this.componentRefs[host].hostView);
   }

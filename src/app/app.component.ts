@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AdItem } from './ad-item';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +8,7 @@ import { AdItem } from './ad-item';
     </div>
   `,
 })
-export class AppComponent implements OnInit {
-  ads: AdItem[] = [];
-
-  ngOnInit() {}
-}
+export class AppComponent {}
 
 /*
 Copyright Google LLC. All Rights Reserved.
