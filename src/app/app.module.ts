@@ -1,17 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { AdBannerComponent } from './ad-banner.component';
+import { DemoComponent } from './demo.component';
 
 @NgModule({
   imports: [BrowserModule],
-  declarations: [
-    AppComponent,
-    AdBannerComponent,
-    HeroJobAdComponent,
-    AdDirective,
-  ],
-  entryComponents: [HeroJobAdComponent],
+  declarations: [AppComponent, DemoComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

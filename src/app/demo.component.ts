@@ -8,7 +8,7 @@ import {
 import { LoaderComponent } from './loader.component';
 
 @Component({
-  selector: 'app-ad-banner',
+  selector: 'app-demo',
   template: `
     <div class="ad-banner-example">
       <button (click)="createComponent('dynamicHost')">Create</button>
