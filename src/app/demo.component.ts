@@ -3,6 +3,7 @@ import {
   ComponentFactoryResolver,
   ApplicationRef,
   Injector,
+  ComponentFactory,
 } from '@angular/core';
 
 import { LoaderComponent } from './loader.component';
@@ -10,51 +11,43 @@ import { LoaderComponent } from './loader.component';
 @Component({
   selector: 'app-demo',
   template: `
-    <div class="ad-banner-example">
-      <button (click)="createComponent('dynamicHost')">Create</button>
-      <button (click)="createComponent('dynamicHost2')">Create2</button>
-      <button (click)="removeComponent('dynamicHost')">Destroy latest</button>
-      <button (click)="removeComponent('dynamicHost2')">Destroy2 latest</button>
-      <ng-template adHost>Fixed host</ng-template>
-      <div style="border:1px solid red" id='dynamicHost'>Dynamic host</div>
-      <div style="border:1px solid blue" id='dynamicHost2'>Dynamic host 2</div>
-    </div>
+      <button (click)="toggleLoader('body')">Toggle loader on body</button>
+      <button (click)="toggleLoader('content')">Toggle loader on content</button>
+      <div class="content" style="border:1px solid red" id='dynamicHost'>Content</div>
   `,
 })
 export class DemoComponent {
-  private componentRefs: any = {};
+  private loaders: any = {};
+  componentFactory: ComponentFactory<LoaderComponent>;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private injector: Injector,
     private app: ApplicationRef
-  ) {}
-
-  createComponent(host: string) {
-    const componentFactory =
+  ) {
+    this.componentFactory =
       this.componentFactoryResolver.resolveComponentFactory(LoaderComponent);
-
-    const hostElem = document
-      .getElementById(host)
-      ?.appendChild(document.createElement('div'));
-
-    this.componentRefs[host] = componentFactory.create(
-      this.injector,
-      [],
-      hostElem
-    );
-
-    this.componentRefs[host].instance.message = 'loading...';
-
-    this.app.attachView(this.componentRefs[host].hostView);
   }
 
-  removeComponent(host: string) {
-    if (this.componentRefs[host]) {
-      console.log('detach me!');
-      this.app.detachView(this.componentRefs[host].hostView);
-      this.componentRefs[host].destroy();
-      delete this.componentRefs[host];
+  toggleLoader(className: string) {
+    if (this.loaders[className]) {
+      this.app.detachView(this.loaders[className].hostView);
+      this.loaders[className].destroy();
+      delete this.loaders[className];
+    } else {
+      const hostElem = document
+        .getElementsByClassName(className)[0]
+        ?.appendChild(document.createElement('div'));
+
+      this.loaders[className] = this.componentFactory.create(
+        this.injector,
+        [],
+        hostElem
+      );
+
+      this.loaders[className].instance.message = 'loading...';
+
+      this.app.attachView(this.loaders[className].hostView);
     }
   }
 }

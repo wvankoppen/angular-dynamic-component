@@ -1,10 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-  template: `<div> {{message}} </div>
-  `,
+  template: `<div> {{message}} </div>`,
 })
 export class LoaderComponent implements OnInit, OnDestroy {
+  @Input() message?: string;
+
   ngOnInit(): void {
     console.log('loader.ngOnInit()');
   }
@@ -12,8 +13,6 @@ export class LoaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('loader.ngOnDestroy()');
   }
-
-  @Input() message?: string;
 }
 
 /*
